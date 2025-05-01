@@ -81,17 +81,17 @@ export const mockUserData = {
   vaccineSchedule: {
     timePoints: [
       'Birth',
-      '2 months',
-      '4 months',
-      '6 months',
+      '6 weeks',
+      '10 weeks',
+      '14 weeks',
+      '9 months',
       '12 months',
       '15 months',
-      '18 months',
     ],
     vaccines: [
       {
         id: 1,
-        name: 'Hepatitis B (HepB)',
+        name: 'BCG',
         schedule: [
           'completed',
           'completed',
@@ -125,7 +125,7 @@ export const mockUserData = {
       },
       {
         id: 3,
-        name: 'DTaP',
+        name: 'OPV',
         schedule: [
           'not-required',
           'completed',
@@ -144,7 +144,7 @@ export const mockUserData = {
       },
       {
         id: 4,
-        name: 'Hib',
+        name: 'FIPV',
         schedule: [
           'not-required',
           'completed',
@@ -161,7 +161,7 @@ export const mockUserData = {
       },
       {
         id: 5,
-        name: 'PCV13',
+        name: 'PCV',
         schedule: [
           'not-required',
           'completed',
@@ -178,7 +178,7 @@ export const mockUserData = {
       },
       {
         id: 6,
-        name: 'IPV',
+        name: 'DPT-Hep.B-Hib',
         schedule: [
           'not-required',
           'completed',
@@ -195,7 +195,7 @@ export const mockUserData = {
       },
       {
         id: 7,
-        name: 'Influenza (Flu)',
+        name: 'MR (Measles – Rubella)',
         schedule: [
           'not-required',
           'not-required',
@@ -212,7 +212,7 @@ export const mockUserData = {
       },
       {
         id: 8,
-        name: 'MMR',
+        name: 'JE (Japanese Encephalitis)',
         schedule: [
           'not-required',
           'not-required',
@@ -229,7 +229,7 @@ export const mockUserData = {
       },
       {
         id: 9,
-        name: 'Varicella',
+        name: 'TCV',
         schedule: [
           'not-required',
           'not-required',
@@ -246,7 +246,7 @@ export const mockUserData = {
       },
       {
         id: 10,
-        name: 'Hepatitis A (HepA)',
+        name: 'others',
         schedule: [
           'not-required',
           'not-required',
@@ -260,23 +260,6 @@ export const mockUserData = {
           'Protects against a liver disease that can cause mild to severe illness.',
         protectsAgainst: 'Hepatitis A virus infection',
         sideEffects: 'Soreness, headache, loss of appetite',
-      },
-      {
-        id: 11,
-        name: 'Meningococcal',
-        schedule: [
-          'not-required',
-          'not-required',
-          'not-required',
-          'not-required',
-          'not-required',
-          'not-required',
-          'not-required',
-        ],
-        description:
-          'Protects against bacteria that can cause bloodstream infections and meningitis.',
-        protectsAgainst: 'Meningococcal disease',
-        sideEffects: 'Redness or pain at injection site, irritability',
       },
     ],
   },

@@ -5,17 +5,10 @@ import {
   Text,
   TouchableOpacity,
   StyleSheet,
-  Image,
 } from 'react-native';
-import {
-  ArrowRight,
-  CircleAlert as AlertCircle,
-  Check,
-  Clock,
-  ThumbsUp,
-} from 'lucide-react-native';
+import { ArrowRight, Check, Clock, ThumbsUp } from 'lucide-react-native';
 import { mockUserData } from '../../data/mockData';
-import WelcomeHeader from '../../components/home/WelcomeHeader';
+import Header from '../../components/common/Header';
 import VaccinationAlert from '../../components/home/VaccinationAlert';
 import SummaryCard from '../../components/home/SumaryCard';
 import ActivityItem from '../../components/home/ActivityItem';
@@ -25,7 +18,6 @@ import LinkButton from '../../components/common/LinkButton';
 export default function HomeScreen() {
   const { parent, child, vaccinations } = mockUserData;
 
-  // Calculate vaccination statistics
   const totalVaccines = vaccinations.length;
   const completedVaccines = vaccinations.filter(
     (v) => v.status === 'completed'
@@ -37,10 +29,8 @@ export default function HomeScreen() {
     (completedVaccines / totalVaccines) * 100
   );
 
-  // Find the next upcoming vaccination
   const upcomingVaccination = vaccinations.find((v) => v.status === 'pending');
 
-  // Get recent activity
   const recentActivities = vaccinations
     .filter((v) => v.status === 'completed')
     .sort((a, b) => new Date(b.date) - new Date(a.date))
@@ -48,7 +38,7 @@ export default function HomeScreen() {
 
   return (
     <ScrollView style={styles.container}>
-      <WelcomeHeader parentName={parent.name} />
+      <Header />
 
       {upcomingVaccination && (
         <VaccinationAlert
@@ -56,6 +46,13 @@ export default function HomeScreen() {
           date={upcomingVaccination.date}
         />
       )}
+
+      <View style={styles.welcomeContainer}>
+        <Text style={styles.greeting}>Hi, {parent.name}!</Text>
+        <Text style={styles.subtitle}>
+          Here's your child's vaccination summary
+        </Text>
+      </View>
 
       <View style={styles.summaryContainer}>
         <SummaryCard
@@ -120,6 +117,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f8fafc',
+  },
+  welcomeContainer: {
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+  },
+  greeting: {
+    fontSize: 24,
+    fontWeight: '700',
+    color: '#1e293b',
+    marginBottom: 4,
+  },
+  subtitle: {
+    fontSize: 16,
+    color: '#64748b',
   },
   summaryContainer: {
     flexDirection: 'row',

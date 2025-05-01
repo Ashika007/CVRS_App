@@ -1,10 +1,8 @@
 import { Tabs } from 'expo-router';
-import {
-  Chrome as Home,
-  FileText,
-  User,
-  Settings as SettingsIcon,
-} from 'lucide-react-native';
+import { Ionicons } from '@expo/vector-icons';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+import Feather from '@expo/vector-icons/Feather';
+import Fontisto from '@expo/vector-icons/Fontisto';
 import { StyleSheet } from 'react-native';
 
 export default function TabLayout() {
@@ -23,7 +21,9 @@ export default function TabLayout() {
         name="home"
         options={{
           title: 'Home',
-          tabBarIcon: ({ color, size }) => <Home color={color} size={size} />,
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="home" color={color} size={size} />
+          ),
         }}
       />
       <Tabs.Screen
@@ -31,7 +31,7 @@ export default function TabLayout() {
         options={{
           title: 'Status',
           tabBarIcon: ({ color, size }) => (
-            <FileText color={color} size={size} />
+            <Fontisto name="heartbeat-alt" color={color} size={size} />
           ),
         }}
       />
@@ -39,7 +39,9 @@ export default function TabLayout() {
         name="profile"
         options={{
           title: 'Profile',
-          tabBarIcon: ({ color, size }) => <User color={color} size={size} />,
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome name="user" color={color} size={size} />
+          ),
         }}
       />
       <Tabs.Screen
@@ -47,7 +49,7 @@ export default function TabLayout() {
         options={{
           title: 'Settings',
           tabBarIcon: ({ color, size }) => (
-            <SettingsIcon color={color} size={size} />
+            <Feather name="settings" color={color} size={size} />
           ),
         }}
       />
