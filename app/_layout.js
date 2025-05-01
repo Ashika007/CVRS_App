@@ -1,53 +1,75 @@
 import { Tabs } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import Feather from '@expo/vector-icons/Feather';
-import Fontisto from '@expo/vector-icons/Fontisto';
+import {
+  Chrome as Home,
+  FileText,
+  User,
+  Settings as SettingsIcon,
+} from 'lucide-react-native';
+import { StyleSheet } from 'react-native';
 
-export default function Layout() {
+export default function TabLayout() {
   return (
-    <Tabs initialRouteName="screens/home">
+    <Tabs
+      screenOptions={{
+        tabBarActiveTintColor: '#3b82f6',
+        tabBarInactiveTintColor: '#94a3b8',
+        tabBarStyle: styles.tabBar,
+        tabBarLabelStyle: styles.tabBarLabel,
+        headerShown: false,
+      }}
+    >
+      <Tabs.Screen name="index" options={{ tabBarButton: () => null }} />
       <Tabs.Screen
-        name="screens/home"
+        name="home"
         options={{
-          title: 'home',
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="home" color={color} size={size} />
-          ),
+          title: 'Home',
+          tabBarIcon: ({ color, size }) => <Home color={color} size={size} />,
         }}
       />
-
       <Tabs.Screen
-        name="screens/status"
+        name="status"
         options={{
           title: 'Status',
           tabBarIcon: ({ color, size }) => (
-            <Fontisto name="heartbeat-alt" color={color} size={size} />
+            <FileText color={color} size={size} />
           ),
         }}
       />
-
       <Tabs.Screen
-        name="screens/profile"
+        name="profile"
         options={{
           title: 'Profile',
-          tabBarIcon: ({ color, size }) => (
-            <FontAwesome name="user" color={color} size={size} />
-          ),
+          tabBarIcon: ({ color, size }) => <User color={color} size={size} />,
         }}
       />
-
       <Tabs.Screen
-        name="screens/settings"
+        name="settings"
         options={{
           title: 'Settings',
           tabBarIcon: ({ color, size }) => (
-            <Feather name="settings" color={color} size={size} />
+            <SettingsIcon color={color} size={size} />
           ),
         }}
       />
-
-      <Tabs.Screen name="index" options={{ tabBarButton: () => null }} />
     </Tabs>
   );
 }
+
+const styles = StyleSheet.create({
+  tabBar: {
+    backgroundColor: '#ffffff',
+    elevation: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: -2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 3,
+    borderTopWidth: 1,
+    borderTopColor: '#f1f5f9',
+    height: 60,
+  },
+  tabBarLabel: {
+    fontSize: 12,
+    fontWeight: '500',
+    marginBottom: 4,
+  },
+});
