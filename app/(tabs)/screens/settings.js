@@ -18,8 +18,8 @@ import {
   ChevronRight,
   Mail,
 } from 'lucide-react-native';
-import SettingsItem from '../../components/settings/SettingsItem';
-import SettingsSection from '../../components/settings/SettingsSection';
+import SettingsItem from '../../../components/settings/SettingsItem';
+import SettingsSection from '../../../components/settings/SettingsSection';
 
 export default function SettingsScreen() {
   const [notificationsEnabled, setNotificationsEnabled] = React.useState(true);

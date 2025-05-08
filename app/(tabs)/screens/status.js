@@ -7,9 +7,10 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { ChevronLeft, ChevronRight } from 'lucide-react-native';
-import { mockUserData } from '../../data/mockData';
-import ProfileHeader from '../../components/status/ProfileHeader';
-import StatusIndicator from '../../components/status/StatusIndicator';
+import { mockUserData } from '../../../data/mockData';
+import { supabase } from '../../../lib/supabase';
+import ProfileHeader from '../../../components/status/ProfileHeader';
+import StatusIndicator from '../../../components/status/StatusIndicator';
 
 export default function StatusScreen() {
   const { parent, child, vaccineSchedule } = mockUserData;

@@ -16,9 +16,9 @@ import {
   Phone,
   Mail,
 } from 'lucide-react-native';
-import { mockUserData } from '../../data/mockData';
-import ProfileField from '../../components/profile/ProfileField';
-import ProfileAvatar from '../../components/profile/ProfileAvatar';
+import { mockUserData } from '../../../data/mockData';
+import ProfileField from '../../../components/profile/ProfileField';
+import ProfileAvatar from '../../../components/profile/ProfileAvatar';
 
 export default function ProfileScreen() {
   const { parent, child } = mockUserData;

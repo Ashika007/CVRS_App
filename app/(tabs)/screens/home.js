@@ -7,13 +7,13 @@ import {
   StyleSheet,
 } from 'react-native';
 import { ArrowRight, Check, Clock, ThumbsUp } from 'lucide-react-native';
-import { mockUserData } from '../../data/mockData';
-import Header from '../../components/common/Header';
-import VaccinationAlert from '../../components/home/VaccinationAlert';
-import SummaryCard from '../../components/home/SumaryCard';
-import ActivityItem from '../../components/home/ActivityItem';
-import InfoBox from '../../components/home/InfoBox';
-import LinkButton from '../../components/common/LinkButton';
+import { mockUserData } from '../../../data/mockData';
+import Header from '../../../components/common/Header';
+import VaccinationAlert from '../../../components/home/VaccinationAlert';
+import SummaryCard from '../../../components/home/SumaryCard';
+import ActivityItem from '../../../components/home/ActivityItem';
+import InfoBox from '../../../components/home/InfoBox';
+import LinkButton from '../../../components/common/LinkButton';
 
 export default function HomeScreen() {
   const { parent, child, vaccinations } = mockUserData;
