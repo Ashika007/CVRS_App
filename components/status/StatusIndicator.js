@@ -1,49 +1,52 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { Check, Clock, X, Minus } from 'lucide-react-native';
+import { View, StyleSheet } from 'react-native';
+import { Check, Clock, AlertCircle, Minus } from 'lucide-react-native';
 
 export default function StatusIndicator({ status }) {
-  const getStatusDisplay = () => {
+  const getStatusConfig = () => {
     switch (status) {
       case 'completed':
         return {
-          icon: <Check size={16} color="#10b981" />,
-          color: '#10b981',
-          backgroundColor: '#d1fae5',
+          color: '#22c55e',
+          icon: Check,
+          backgroundColor: '#dcfce7',
         };
       case 'pending':
         return {
-          icon: <Clock size={16} color="#f59e0b" />,
           color: '#f59e0b',
+          icon: Clock,
           backgroundColor: '#fef3c7',
         };
       case 'missed':
         return {
-          icon: <X size={16} color="#ef4444" />,
           color: '#ef4444',
+          icon: AlertCircle,
           backgroundColor: '#fee2e2',
         };
-      case 'not-required':
       default:
         return {
-          icon: <Minus size={16} color="#94a3b8" />,
           color: '#94a3b8',
+          icon: Minus,
           backgroundColor: '#f1f5f9',
         };
     }
   };
 
-  const { icon, color, backgroundColor } = getStatusDisplay();
+  const { color, icon: Icon, backgroundColor } = getStatusConfig();
 
-  return <View style={[styles.container, { backgroundColor }]}>{icon}</View>;
+  return (
+    <View style={[styles.container, { backgroundColor }]}>
+      <Icon size={14} color={color} />
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    alignItems: 'center',
+    width: 24,
+    height: 24,
+    borderRadius: 12,
     justifyContent: 'center',
+    alignItems: 'center',
   },
 });
