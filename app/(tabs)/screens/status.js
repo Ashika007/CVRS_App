@@ -20,6 +20,7 @@ export default function StatusScreen({ childId }) {
   const [error, setError] = useState(null);
   const [child, setChild] = useState(null);
   const [vaccinations, setVaccinations] = useState([]);
+  
   const [expandedVaccine, setExpandedVaccine] = useState(null);
   const [vaccines, setVaccines] = useState([]);
   const [timePoints] = useState([
@@ -92,7 +93,7 @@ export default function StatusScreen({ childId }) {
 
           return acc;
         },
-        []
+        
       );
 
       setVaccinations(transformedVaccinations);
