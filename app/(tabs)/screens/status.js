@@ -1,159 +1,129 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   ScrollView,
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
-  ActivityIndicator,
 } from 'react-native';
 import { ChevronLeft, ChevronRight } from 'lucide-react-native';
 import { mockUserData } from '../../../data/mockData';
-import supabase from '../../../lib/supabase';
+import { supabase } from '../../../lib/supabase';
 import Header from '../../../components/common/Header';
-
 import ProfileHeader from '../../../components/status/ProfileHeader';
 import StatusIndicator from '../../../components/status/StatusIndicator';
 
-export default function StatusScreen({ childId }) {
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [child, setChild] = useState(null);
-  const [vaccinations, setVaccinations] = useState([]);
-  
+export default function StatusScreen() {
+  const { parent, child, vaccineSchedule } = mockUserData;
   const [expandedVaccine, setExpandedVaccine] = useState(null);
-  const [vaccines, setVaccines] = useState([]);
-  const [timePoints] = useState([
-    'Birth',
-    '2m',
-    '4m',
-    '6m',
-    '12m',
-    '15m',
-    '18m',
-    '4y',
-    '11y',
-  ]);
 
-  useEffect(() => {
-    FetchVaccine();
-    fetchData();
-  }, [childId]);
-
-  const FetchVaccine = async () => {
-    const { data, error } = await supabase.from('vaccines').select('*');
-    console.log(data);
-    setVaccines(data);
-  };
-
-  const fetchData = async () => {
-    try {
-      setLoading(true);
-
-      // Example: Fetch child data (you can modify this according to your schema)
-      const { data: childData, error: childError } = await supabase
-        .from('children')
-        .select(
-          `
-          *,
-          vaccination_records (
-            *,
-            vaccines (*)
-          )
-        `
-        )
-        .eq('id', childId)
-        .single();
-
-      if (childError) throw childError;
-      setChild(childData);
-
-      // Transform vaccination records into the required format
-      const transformedVaccinations = childData.vaccination_records.reduce(
-        (acc, record) => {
-          const vaccine = record.vaccines;
-          const existingVaccine = acc.find((v) => v.id === vaccine.id);
-
-          if (!existingVaccine) {
-            acc.push({
-              id: vaccine.id,
-              name: vaccine.name,
-              description: vaccine.description,
-              recommendedAgeMonths: vaccine.recommended_age_months,
-              schedule: timePoints.map((tp) => {
-                const matchingRecord = childData.vaccination_records.find(
-                  (r) =>
-                    r.vaccine_id === vaccine.id &&
-                    getTimePoint(r.vaccination_date) === tp
-                );
-                return matchingRecord ? matchingRecord.status : 'not-required';
-              }),
-            });
-          }
-
-          return acc;
-        },
-        
-      );
-
-      setVaccinations(transformedVaccinations);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
+  const toggleVaccineExpand = (vaccineId) => {
+    if (expandedVaccine === vaccineId) {
+      setExpandedVaccine(null);
+    } else {
+      setExpandedVaccine(vaccineId);
     }
   };
 
   return (
     <ScrollView style={styles.container}>
       <Header />
-      {vaccines.map((vaccine, index) => (
-        <view key={vaccine.id}>
-          <text>{vaccine.vaccine_code_name}</text>
-          <text>{vaccine.vaccine_and_other_immunizing_agents}</text>
-        </view>
-      ))}
+      <ProfileHeader parentName={parent.name} childName={child.name} />
+
+      <View style={styles.tableContainer}>
+        <View style={styles.tableHeader}>
+          <Text style={[styles.headerCell, styles.vaccineNameHeader]}>
+            Vaccine
+          </Text>
+          {vaccineSchedule.timePoints.map((timePoint, index) => (
+            <Text key={index} style={styles.headerCell}>
+              {timePoint}
+            </Text>
+          ))}
+        </View>
+
+        {vaccineSchedule.vaccines.map((vaccine, index) => (
+          <View key={index}>
+            <TouchableOpacity
+              style={[
+                styles.vaccineRow,
+                expandedVaccine === vaccine.id ? styles.expandedRow : null,
+              ]}
+              onPress={() => toggleVaccineExpand(vaccine.id)}
+              activeOpacity={0.7}
+            >
+              <View style={styles.vaccineNameCell}>
+                <Text style={styles.vaccineName}>{vaccine.name}</Text>
+                {expandedVaccine === vaccine.id ? (
+                  <ChevronDown size={16} color="#64748b" />
+                ) : (
+                  <ChevronRight size={16} color="#64748b" />
+                )}
+              </View>
+
+              {vaccineSchedule.timePoints.map((timePoint, tIndex) => (
+                <View key={tIndex} style={styles.statusCell}>
+                  <StatusIndicator status={vaccine.schedule[tIndex]} />
+                </View>
+              ))}
+            </TouchableOpacity>
+
+            {expandedVaccine === vaccine.id && (
+              <View style={styles.expandedInfo}>
+                <Text style={styles.vaccineDescription}>
+                  {vaccine.description}
+                </Text>
+                <Text style={styles.vaccineProtection}>
+                  <Text style={styles.boldText}>Protects against: </Text>
+                  {vaccine.protectsAgainst}
+                </Text>
+                <Text style={styles.vaccineSideEffects}>
+                  <Text style={styles.boldText}>Common side effects: </Text>
+                  {vaccine.sideEffects}
+                </Text>
+                <Text style={styles.date}>
+                  <Text style={styles.boldText}>Date: </Text>
+                  {vaccine.date}
+                </Text>
+              </View>
+            )}
+          </View>
+        ))}
+      </View>
+
+      <View style={styles.legendContainer}>
+        <Text style={styles.legendTitle}>Status Legend:</Text>
+        <View style={styles.legendItem}>
+          <StatusIndicator status="completed" />
+          <Text style={styles.legendText}>Completed</Text>
+        </View>
+        <View style={styles.legendItem}>
+          <StatusIndicator status="pending" />
+          <Text style={styles.legendText}>Pending</Text>
+        </View>
+        <View style={styles.legendItem}>
+          <StatusIndicator status="missed" />
+          <Text style={styles.legendText}>Missed</Text>
+        </View>
+        <View style={styles.legendItem}>
+          <StatusIndicator status="not-required" />
+          <Text style={styles.legendText}>Not Required</Text>
+        </View>
+      </View>
     </ScrollView>
   );
 }
+
+const ChevronDown = ({ size, color }) => (
+  <View style={{ transform: [{ rotate: '90deg' }] }}>
+    <ChevronRight size={size} color={color} />
+  </View>
+);
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f8fafc',
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-  },
-  loadingText: {
-    marginTop: 10,
-    fontSize: 16,
-    color: '#666',
-  },
-  errorContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-  },
-  errorText: {
-    fontSize: 16,
-    color: '#dc2626',
-    marginBottom: 16,
-  },
-  retryButton: {
-    backgroundColor: '#2196F3',
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 8,
-  },
-  retryButtonText: {
-    color: '#ffffff',
-    fontSize: 16,
-    fontWeight: '500',
   },
   tableContainer: {
     marginHorizontal: 12,
@@ -162,7 +132,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     borderRadius: 12,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
     shadowOpacity: 0.1,
     shadowRadius: 3,
     elevation: 2,
@@ -207,13 +180,6 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color: '#334155',
     marginRight: 4,
-    flex: 1,
-  },
-  chevron: {
-    transform: [{ rotate: '0deg' }],
-  },
-  chevronExpanded: {
-    transform: [{ rotate: '90deg' }],
   },
   statusCell: {
     flex: 1,
@@ -231,7 +197,12 @@ const styles = StyleSheet.create({
     color: '#334155',
     marginBottom: 8,
   },
-  vaccineDetails: {
+  vaccineProtection: {
+    fontSize: 13,
+    color: '#475569',
+    marginBottom: 4,
+  },
+  vaccineSideEffects: {
     fontSize: 13,
     color: '#475569',
   },
@@ -244,7 +215,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     borderRadius: 12,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
     shadowOpacity: 0.1,
     shadowRadius: 3,
     elevation: 2,

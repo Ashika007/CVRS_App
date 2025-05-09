@@ -13,7 +13,7 @@ export default function ProfileHeader({ childName, parentName }) {
 const styles = StyleSheet.create({
   container: {
     padding: 16,
-    backgroundColor: '#2196F3',
+    backgroundColor: '#2196F1',
     borderBottomLeftRadius: 15,
     borderBottomRightRadius: 15,
   },

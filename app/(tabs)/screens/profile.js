@@ -127,8 +127,13 @@ export default function ProfileScreen() {
           <View style={styles.infoContainer}>
             <ProfileField
               icon={<User size={20} color="#3b82f6" />}
-              label="Name"
-              value={parent.name}
+              label="Mother's Name"
+              value={parent.motherName} // assuming this is part of mockUserData
+            />
+            <ProfileField
+              icon={<User size={20} color="#3b82f6" />}
+              label="Father's Name"
+              value={parent.fatherName} // assuming this is part of mockUserData
             />
 
             <ProfileField

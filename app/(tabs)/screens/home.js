@@ -14,6 +14,7 @@ import SummaryCard from '../../../components/home/SumaryCard';
 import ActivityItem from '../../../components/home/ActivityItem';
 import InfoBox from '../../../components/home/InfoBox';
 import LinkButton from '../../../components/common/LinkButton';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function HomeScreen() {
   const { parent, child, vaccinations } = mockUserData;

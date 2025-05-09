@@ -1,7 +1,9 @@
 export const mockUserData = {
   parent: {
-    name: 'Anisha Shrestha',
-    email: 'Anishashrestha001@example.com',
+    name: 'Sunita Shrestha',
+    motherName: 'Sunita Shrestha',
+    fatherName: 'Suraj Shrestha',
+    email: 'Sunitashrestha001@example.com',
     phone: '+977 9867045900',
     address: 'Buddha Tole, Kalanki, Kathmandu ',
     photo: 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg',
@@ -105,6 +107,7 @@ export const mockUserData = {
           'Protects against a serious liver disease that can lead to liver failure and cancer.',
         protectsAgainst: 'Hepatitis B virus infection',
         sideEffects: 'Soreness at injection site, mild fever',
+        date: '2024-05-06',
       },
       {
         id: 2,

@@ -1,12 +1,15 @@
 import { Tabs } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import Feather from '@expo/vector-icons/Feather';
 import Fontisto from '@expo/vector-icons/Fontisto';
 import { StyleSheet } from 'react-native';
+import * as Font from 'expo-font';
+import { Ionicons } from '@expo/vector-icons';
+
 
 export default function TabLayout() {
   return (
+    
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: '#3b82f6',
